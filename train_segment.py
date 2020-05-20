@@ -36,8 +36,8 @@ parser.add_argument("--need_save", type=bool, default=True, help="need to save")
 parser.add_argument("--save_interval", type=int, default=10, help="interval of save weights")
 
 
-parser.add_argument("--img_height", type=int, default=480, help="size of image height")
-parser.add_argument("--img_width", type=int, default=320, help="size of image width")
+parser.add_argument("--img_height", type=int, default=704, help="size of image height")
+parser.add_argument("--img_width", type=int, default=256, help="size of image width")
 
 opt = parser.parse_args()
 
@@ -78,8 +78,8 @@ transforms_ = transforms.Compose([
 ])
 
 transforms_mask = transforms.Compose([
-    # transforms.Resize((opt.img_height//8, opt.img_width//8)),
-    transforms.Resize((opt.img_height, opt.img_width)),
+    transforms.Resize((opt.img_height//8, opt.img_width//8)),
+    # transforms.Resize((opt.img_height, opt.img_width)) 这个地方这样子写是错误的，必须是上面的除以8
     transforms.ToTensor(),
     #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])
