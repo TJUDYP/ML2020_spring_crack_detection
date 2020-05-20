@@ -10,7 +10,7 @@ import torchvision.transforms as transforms
 import torchvision.transforms.functional as VF
 
 class KolektorDataset(Dataset):
-    def __init__(self, dataRoot, transforms_= None, transforms_mask = None, subFold="Train_NG", isTrain=True):
+    def __init__(self, dataRoot, transforms_= None, transforms_mask = None, subFold="Train_CFD", isTrain=True):
 
         self.isTrain = isTrain
         if transforms_mask == None:
@@ -23,10 +23,10 @@ class KolektorDataset(Dataset):
         else:
             self.transform = transforms_
 
-        self.imgFiles   = sorted(glob.glob(os.path.join(dataRoot, subFold) + "/*.bmp"))
+        self.imgFiles   = sorted(glob.glob(os.path.join(dataRoot, subFold) + "/cfd_image" + "/*.jpg"))
 
         if isTrain:
-            self.labelFiles = sorted(glob.glob(os.path.join(dataRoot, subFold) + "/*.bmp"))
+            self.labelFiles = sorted(glob.glob(os.path.join(dataRoot, subFold) +"/cfd_gt" + "/*.png"))
 
         self.len = len(self.imgFiles)
 
