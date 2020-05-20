@@ -10,7 +10,7 @@ import torchvision.transforms as transforms
 import torchvision.transforms.functional as VF
 
 class KolektorDataset(Dataset):
-    def __init__(self, dataRoot, transforms_= None, transforms_mask = None, subFold="Train_CFD", isTrain=True):
+    def __init__(self, dataRoot, transforms_= None, transforms_mask = None, subFold="CFD", isTrain=True):
 
         self.isTrain = isTrain
         if transforms_mask == None:
