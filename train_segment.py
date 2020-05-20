@@ -196,6 +196,6 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
             os.makedirs(save_path_str, exist_ok=True)
 
         torch.save(segment_net.state_dict(), "%s/segment_net_%d.pth" % (save_path_str, epoch))
-        print("save weights ! epoch = %d"%epoch)
+        print("save weights ! epoch = %d" %epoch)
         #segment_net.train()
         pass
