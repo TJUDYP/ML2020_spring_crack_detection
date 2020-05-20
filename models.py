@@ -131,7 +131,7 @@ if  __name__=='__main__':
     
     snet = SegmentNet()
     dnet = DecisionNet() 
-    img  =  torch.randn(4, 3, 482, 320)
+    img  =  torch.randn(4, 3, 704,256)
 
     snet.eval()
 
