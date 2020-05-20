@@ -45,7 +45,7 @@ class KolektorDataset(Dataset):
             kernel = np.ones((5, 5), np.uint8)
             matD = cv2.dilate(mat, kernel)
             mask = Image.fromarray(matD)               # image2 is a PIL imagem, formarray作用:
-                                                       #Creates an image memory from an object exporting the array interface    
+                                                       # Creates an image memory from an object exporting the array interface    
 
             if np.random.rand(1) > 0.5:
                 mask = VF.hflip(mask)       # hfip: Horizontally flip the given PIL Image.
