@@ -36,8 +36,8 @@ parser.add_argument("--need_save", type=bool, default=True, help="need to save")
 parser.add_argument("--save_interval", type=int, default=10, help="interval of save weights")
 
 
-parser.add_argument("--img_height", type=int, default=704, help="size of image height")
-parser.add_argument("--img_width", type=int, default=256, help="size of image width")
+parser.add_argument("--img_height", type=int, default=480, help="size of image height")
+parser.add_argument("--img_width", type=int, default=320, help="size of image width")
 
 opt = parser.parse_args()
 
@@ -84,19 +84,21 @@ transforms_mask = transforms.Compose([
 ])
 
 
-trainOKloader = DataLoader(
-    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask, subFold="Train_OK", isTrain=True),
+trainCFDloader = DataLoader(
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask, subFold="CFD", isTrain=True),
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.worker_num,
 )
 
+'''
 trainNGloader = DataLoader(
     KolektorDataset(dataSetRoot, transforms_=transforms_,  transforms_mask= transforms_mask, subFold="Train_NG", isTrain=True),
     batch_size=opt.batch_size,
     shuffle=True,
     num_workers=opt.worker_num,
 )
+'''
 
 '''
 trainloader =  DataLoader(
@@ -108,7 +110,7 @@ trainloader =  DataLoader(
 '''
 
 testloader = DataLoader(
-    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="Test", isTrain=False),
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_Test", isTrain=False),
     batch_size=1,
     shuffle=False,
     num_workers=opt.worker_num,
@@ -121,11 +123,13 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
     # DataLoder使用__iter__()方法产生成一个DataLoderIter
     # 接着后续使用__next__()来得到batch 
 
-    iterOK = trainOKloader.__iter__()
-    iterNG = trainNGloader.__iter__()
+    iterCFD = trainCFDloader.__iter__()
+    #iterNG = trainNGloader.__iter__()
 
-    lenNum = min( len(trainNGloader), len(trainOKloader))
-    lenNum = 2*(lenNum-1)
+    #lenNum = min( len(trainNGloader), len(trainOKloader))
+    #lenNum = 2*(lenNum-1)
+
+    lenNum = len(trainCFDloader)
 
     segment_net.train()
     # train *****************************************************************
@@ -134,12 +138,14 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
     train_loss_sum, train_acc_sum, batch_count = 0.0, 0.0, 0.0
 
     for i in range(0, lenNum):
-        if i % 2 == 0:
-            batchData = iterOK.__next__()
+        #if i % 2 == 0:
+            #batchData = iterOK.__next__()
             #idx, batchData = enumerate(trainOKloader)
-        else :
-            batchData = iterNG.__next__()
+        #else :
+        #    batchData = iterNG.__next__()
             #idx, batchData = enumerate(trainNGloader)
+        
+        batchData = iterCFD.__next__()
 
         if opt.cuda:
             img = batchData["img"].cuda()
