@@ -78,7 +78,8 @@ transforms_ = transforms.Compose([
 ])
 
 transforms_mask = transforms.Compose([
-    transforms.Resize((opt.img_height//8, opt.img_width//8)),
+    # transforms.Resize((opt.img_height//8, opt.img_width//8)),
+    transforms.Resize((opt.img_height, opt.img_width)),
     transforms.ToTensor(),
     #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])
@@ -110,10 +111,10 @@ trainloader =  DataLoader(
 '''
 
 testloader = DataLoader(
-    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_Test", isTrain=False),
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_TEST", isTrain=False),
     batch_size=1,
     shuffle=False,
-    num_workers=opt.worker_num,
+    num_workers=opt.worker_num
 )
 
 
@@ -159,10 +160,10 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
         rst = segment_net(img)
         seg = rst["seg"]
 
+        loss_seg = criterion_segment(seg, mask)
         loss_seg.backward()
         optimizer_seg.step()
 
-        loss_seg = criterion_segment(seg, mask)
         train_loss_sum += loss_seg.item() 
         #train_acc_sum += (seg.argmax(dim=1)==mask).sum().item()
         batch_count += 1
