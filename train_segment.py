@@ -117,6 +117,10 @@ testloader = DataLoader(
 
 for epoch in range(opt.begin_epoch, opt.end_epoch):
     
+    # Dataset,DataLoder,DataLoderIter，三者是依次封装的关系，前者被封装进入后者
+    # DataLoder使用__iter__()方法产生成一个DataLoderIter
+    # 接着后续使用__next__()来得到batch 
+
     iterOK = trainOKloader.__iter__()
     iterNG = trainNGloader.__iter__()
 
