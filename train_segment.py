@@ -129,6 +129,10 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
 
     segment_net.train()
     # train *****************************************************************
+
+    # 存储每一个epoch的总损失和总精度
+    train_loss_sum, train_acc_sum, batch_count = 0.0, 0.0, 0.0
+
     for i in range(0, lenNum):
         if i % 2 == 0:
             batchData = iterOK.__next__()
@@ -147,24 +151,25 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
         optimizer_seg.zero_grad()
 
         rst = segment_net(img)
-
         seg = rst["seg"]
 
-        loss_seg = criterion_segment(seg, mask)
         loss_seg.backward()
         optimizer_seg.step()
 
-        sys.stdout.write(
-            "\r [Epoch %d/%d]  [Batch %d/%d] [loss %f]"
-             %(
-                epoch,
-                opt.end_epoch,
-                i,
-                lenNum,
-                loss_seg.item()
-             )
-        )
+        loss_seg = criterion_segment(seg, mask)
+        train_loss_sum += loss_seg.item() 
+        #train_acc_sum += (seg.argmax(dim=1)==mask).sum().item()
+        batch_count += 1
+
+
+    #print("[Epoch {0}/{1}], [loss:{2}], [accuracy:{3}]".format(epoch, opt.end_epoch,
+    #                                                    train_loss_sum/batch_count, train_acc_sum/batch_count))
+
+    print("[Epoch {0}/{1}], [loss:{2}]".format(epoch, opt.end_epoch, train_loss_sum/batch_count))
+
+
     
+
     # test ****************************************************************************
     if opt.need_test and epoch % opt.test_interval == 0 and epoch >= opt.test_interval:
         # segment_net.eval()
