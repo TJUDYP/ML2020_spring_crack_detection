@@ -30,7 +30,7 @@ parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of firs
 
 parser.add_argument("--begin_epoch", type=int, default=0, help="begin_epoch")
 parser.add_argument("--end_epoch", type=int, default=61, help="end_epoch")
-parser.add_argument("--seg_epoch", type=int, default=50, help="pretrained segment epoch")
+parser.add_argument("--seg_epoch", type=int, default=20, help="pretrained segment epoch")
 
 parser.add_argument("--need_test", type=bool, default=True, help="need to test")
 parser.add_argument("--test_interval", type=int, default=10, help="interval of test")
@@ -124,28 +124,37 @@ trainCFDloader = DataLoader(
     num_workers=opt.worker_num,
 )
 
+'''
 testloader = DataLoader(
     KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_TEST", isTrain=False),
     batch_size=1,
     shuffle=False,
     num_workers=opt.worker_num
 )
-
+'''
 
 for epoch in range(opt.begin_epoch, opt.end_epoch):
-    
+    '''
     iterOK = trainOKloader.__iter__()
     iterNG = trainNGloader.__iter__()
 
     lenNum = min( len(trainNGloader), len(trainOKloader))
     lenNum = 2*(lenNum-1)
+    '''
 
+    iterCFD = trainCFDloader.__iter__()
+    lenNum = len(trainCFDloader)
     #decision_net.train()
     #segment_net.eval()
     # train *****************************************************************
+    train_loss_sum = 0.0
+    batch_count = 0
+
     for i in range(0, lenNum):
 
-        if i % 2 == 0:
+        batchData = iterCFD.__next__()
+        gt_c = Variable(torch.Tensor(np.ones((batchData["img"].size(0), 1))), requires_grad=False)
+        '''if i % 2 == 0:
             batchData = iterOK.__next__()
             #idx, batchData = enumerate(trainOKloader)
             gt_c = Variable(torch.Tensor(np.zeros((batchData["img"].size(0), 1))), requires_grad=False)
@@ -153,7 +162,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
             batchData = iterNG.__next__()
             gt_c = Variable(torch.Tensor(np.ones((batchData["img"].size(0), 1))), requires_grad=False)
             #idx, batchData = enumerate(trainNGloader)
-
+        '''
         if opt.cuda:
             img = batchData["img"].cuda()
             mask = batchData["mask"].cuda()
@@ -174,20 +183,27 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
 
         loss_dec = criterion_decision(rst_d, gt_c)
 
+        train_loss_sum += loss_dec
+        batch_count += 1
+
+
         loss_dec.backward()
         optimizer_dec.step()
 
+        '''
         sys.stdout.write(
             "\r [Epoch %d/%d]  [Batch %d/%d] [loss %f]"
              %(
                 epoch,
+             )
                 opt.end_epoch,
                 i,
                 lenNum,
                 loss_dec.item()
-             )
         )
-    
+        '''
+    print("[Epoch {0}/{1}], [loss:{2}]".format(epoch, opt.end_epoch, train_loss_sum/batch_count))
+
     # test ****************************************************************************
     '''if opt.need_test and epoch % opt.test_interval == 0 and epoch >= opt.test_interval:
         #decision_net.eval()
