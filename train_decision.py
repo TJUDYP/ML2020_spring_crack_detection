@@ -22,7 +22,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--cuda", type=bool, default=True, help="number of gpu")
 parser.add_argument("--gpu_num", type=int, default=1, help="number of gpu")
-parser.add_argument("--worker_num", type=int, default=4, help="number of input workers")
+parser.add_argument("--worker_num", type=int, default=0, help="number of input workers")
 parser.add_argument("--batch_size", type=int, default=4, help="batch size of input")
 parser.add_argument("--lr", type=float, default=0.001, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
@@ -46,7 +46,7 @@ opt = parser.parse_args()
 
 print(opt)
 
-dataSetRoot = "./Data" # "/home/sean/Data/KolektorSDD_sean"
+dataSetRoot = "./Data"
 
 # ***********************************************************************
 
@@ -94,7 +94,7 @@ transforms_mask = transforms.Compose([
     #transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ])
 
-
+'''
 trainOKloader = DataLoader(
     KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask, subFold="Train_OK", isTrain=True),
     batch_size=opt.batch_size,
@@ -109,6 +109,7 @@ trainNGloader = DataLoader(
     num_workers=opt.worker_num,
 )
 '''
+'''
 trainloader =  DataLoader(
     KolektorDataset(dataSetRoot, transforms_=transforms_,  transforms_mask= transforms_mask, subFold="Train_ALL", isTrain=True),
     batch_size=opt.batch_size,
@@ -116,11 +117,18 @@ trainloader =  DataLoader(
     num_workers=opt.worker_num,
 )
 '''
+trainCFDloader = DataLoader(
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask, subFold="CFD", isTrain=True),
+    batch_size=opt.batch_size,
+    shuffle=True,
+    num_workers=opt.worker_num,
+)
+
 testloader = DataLoader(
-    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="Test", isTrain=False),
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_TEST", isTrain=False),
     batch_size=1,
     shuffle=False,
-    num_workers=0,
+    num_workers=opt.worker_num
 )
 
 
@@ -181,7 +189,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
         )
     
     # test ****************************************************************************
-    if opt.need_test and epoch % opt.test_interval == 0 and epoch >= opt.test_interval:
+    '''if opt.need_test and epoch % opt.test_interval == 0 and epoch >= opt.test_interval:
         #decision_net.eval()
         #segment_net.eval()
 
@@ -211,6 +219,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
             save_image(segTest.data, "%s/img_%d_seg_%s.jpg"% (save_path_str, i, labelStr))
         
         #decision_net.train()
+    '''
 
     # save parameters *****************************************************************
     if opt.need_save and epoch % opt.save_interval == 0 and epoch >= opt.save_interval:
