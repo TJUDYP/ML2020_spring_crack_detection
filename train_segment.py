@@ -178,6 +178,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
     
 
     # test ****************************************************************************
+    '''
     if opt.need_test and epoch % opt.test_interval == 0 and epoch >= opt.test_interval:
         # segment_net.eval()
 
@@ -198,6 +199,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
             save_image(segTest.data, "%s/img_%d_seg.jpg"% (save_path_str, i))
         
         segment_net.train()
+     '''
 
     # save parameters *****************************************************************
     if opt.need_save and epoch % opt.save_interval == 0 and epoch >= opt.save_interval:
