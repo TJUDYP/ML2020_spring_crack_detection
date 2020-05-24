@@ -110,13 +110,14 @@ trainloader =  DataLoader(
 )
 '''
 
+'''
 testloader = DataLoader(
     KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= transforms_mask,  subFold="CFD/cfd_TEST", isTrain=False),
     batch_size=1,
     shuffle=False,
     num_workers=opt.worker_num
 )
-
+'''
 
 for epoch in range(opt.begin_epoch, opt.end_epoch):
     
