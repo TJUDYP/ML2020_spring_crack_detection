@@ -28,7 +28,7 @@ opt = parser.parse_args()
 
 print(opt)
 
-dataSetRoot = "/home/sean/Projects/SegDecNet/Data"
+dataSetRoot = "./Data"
 
 # ***********************************************************************
 
@@ -56,7 +56,7 @@ transforms_ = transforms.Compose([
 
 
 testloader = DataLoader(
-    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= None,  subFold="Test", isTrain=False),
+    KolektorDataset(dataSetRoot, transforms_=transforms_, transforms_mask= None,  subFold="CFD/cfd_TEST", isTrain=False),
     batch_size=1,
     shuffle=False,
     num_workers=0,
@@ -87,9 +87,9 @@ for i, testBatch in enumerate(testloader):
     t2 = time.time()
 
     if cTest.item() > 0.5:
-        labelStr = "NG"
+        labelStr = "crack_yes"
     else: 
-        labelStr = "OK"
+        labelStr = "crack_no"
 
     save_path_str = os.path.join(dataSetRoot, "testResult")
 
