@@ -17,6 +17,8 @@ import argparse
 import time
 import PIL.Image as Image
 
+import numpy as np
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--cuda", type=bool, default=True, help="number of gpu")
@@ -161,7 +163,16 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
         rst = segment_net(img)
         seg = rst["seg"]
 
+        # 计算损失loss
         loss_seg = criterion_segment(seg, mask)
+
+        # 计算seg精度
+        auc_seg = torch.eq(seg, mask).sum().float().item()
+        total_num = float(np.array(seg).size)
+        print("auc_seg相等的数量为".format(auc_seg))
+        print("每个batch中图像像素总尺寸为".format(total_num)
+
+
         loss_seg.backward()
         optimizer_seg.step()
 
