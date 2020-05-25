@@ -162,29 +162,36 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
 
         rst = segment_net(img)
         seg = rst["seg"]
+        # print(seg.size())  输出：torch.Size([2, 1, 88, 32])
 
-        # 计算损失loss
         loss_seg = criterion_segment(seg, mask)
-
-        # 计算seg精度
-        auc_seg = torch.eq(seg, mask).sum().float().item()
-        total_num = float(np.array(seg).size)
-        print("auc_seg相等的数量为".format(auc_seg))
-        print("每个batch中图像像素总尺寸为".format(total_num)
-
-
         loss_seg.backward()
         optimizer_seg.step()
 
         train_loss_sum += loss_seg.item() 
-        #train_acc_sum += (seg.argmax(dim=1)==mask).sum().item()
+    
+        
+         # 计算seg精度
+        net_seg = seg.clone().flatten()    # 训练值
+        mask_seg = mask.clone().flatten()  #真实值
+        
+        right_seg = torch.eq(net_seg, mask_seg).sum().float().item()
+        total_num = float(mask.clone().flatten().size()[0])
+        
+        batch_acc = right_seg/total_num
+        train_acc_sum += batch_acc
+        
+        #print("第{}batch的accuracy为：{:.2f}".format(int(batch_count)+1, batch_acc))
+        
         batch_count += 1
+        
+       
 
 
     #print("[Epoch {0}/{1}], [loss:{2}], [accuracy:{3}]".format(epoch, opt.end_epoch,
     #                                                    train_loss_sum/batch_count, train_acc_sum/batch_count))
 
-    print("[Epoch {0}/{1}], [loss:{2}]".format(epoch, opt.end_epoch, train_loss_sum/batch_count))
+    print("[Epoch {0}/{1}], [loss:{2}], [accuracy:{3}]".format(epoch, opt.end_epoch, train_loss_sum/batch_count, train_acc_sum/batch_count))
 
 
     
