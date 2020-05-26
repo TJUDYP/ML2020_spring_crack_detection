@@ -1,5 +1,5 @@
 
-from models_crack_unet import SegmentNet, DecisionNet, weights_init_normal
+from models_crack_unet import SegmentNet, weights_init_normal
 from dataset_crack_unet import KolektorDataset
 
 import torch.nn as nn
