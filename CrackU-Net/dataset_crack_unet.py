@@ -42,7 +42,9 @@ class CFDDataset(Dataset):
             
             #mask = Image.open(self.labelFiles[idx]).convert("RGB")   
             mat = cv2.imread(self.labelFiles[idx], cv2.IMREAD_GRAYSCALE)
-            kernel = np.ones((5, 5), np.uint8)
+
+            #kernel = np.ones((5, 5), np.uint8)
+            kernel = np.ones((1, 1), np.uint8)
             matD = cv2.dilate(mat, kernel)
             mask = Image.fromarray(matD)               # image2 is a PIL imagem, formarray作用:
                                                        # Creates an image memory from an object exporting the array interface    

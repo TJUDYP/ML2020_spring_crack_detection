@@ -35,7 +35,7 @@ parser.add_argument("--end_epoch", type=int, default=101, help="end_epoch")
 parser.add_argument("--need_test", type=bool, default=True, help="need to test")
 parser.add_argument("--test_interval", type=int, default=10, help="interval of test")
 parser.add_argument("--need_save", type=bool, default=True, help="need to save")
-parser.add_argument("--save_interval", type=int, default=10, help="interval of save weights")
+parser.add_argument("--save_interval", type=int, default=30, help="interval of save weights")
 
 
 parser.add_argument("--img_width", type=int, default=480, help="size of image width")
@@ -52,7 +52,8 @@ dataSetRoot = "../Data"
 segment_net = SegmentNet(init_weights=True)
 
 # Loss functions
-criterion_segment  = torch.nn.MSELoss()
+# criterion_segment  = torch.nn.MSELoss()
+criterion_segment  = torch.nn.BCELoss()
 
 # 选择训练环境和参数
 if opt.cuda:
@@ -104,13 +105,7 @@ for epoch in range(opt.begin_epoch, opt.end_epoch):
     train_loss_sum, train_acc_sum, batch_count = 0.0, 0.0, 0.0
 
     for i in range(0, lenNum):
-        #if i % 2 == 0:
-            #batchData = iterOK.__next__()
-            #idx, batchData = enumerate(trainOKloader)
-        #else :
-        #    batchData = iterNG.__next__()
-            #idx, batchData = enumerate(trainNGloader)
-        
+
         batchData = iterCFD.__next__()
 
         if opt.cuda:
