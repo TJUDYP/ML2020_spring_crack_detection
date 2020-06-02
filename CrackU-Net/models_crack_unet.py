@@ -16,13 +16,13 @@ class SegmentNet(nn.Module):
         self.layer1 = nn.Sequential(
                             nn.Conv2d(in_channels, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(64, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(64, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer2 = nn.Sequential(
@@ -32,13 +32,13 @@ class SegmentNet(nn.Module):
         self.layer3 = nn.Sequential(
                             nn.Conv2d(64, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(128, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(128, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer4 = nn.Sequential(
@@ -48,13 +48,13 @@ class SegmentNet(nn.Module):
         self.layer5 = nn.Sequential(
                             nn.Conv2d(128, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(256, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(256, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer6 = nn.Sequential(
@@ -64,13 +64,13 @@ class SegmentNet(nn.Module):
         self.layer7 = nn.Sequential(
                             nn.Conv2d(256, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(512, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(512, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer8 = nn.Sequential(
@@ -80,13 +80,13 @@ class SegmentNet(nn.Module):
         self.layer9 = nn.Sequential(
                             nn.Conv2d(512, 1024, 3, stride=1, padding=1),
                             nn.BatchNorm2d(1024),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(1024, 1024, 3, stride=1, padding=1),
                             nn.BatchNorm2d(1024),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(1024, 1024, 3, stride=1, padding=1),
                             nn.BatchNorm2d(1024),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer10 = nn.Sequential(
@@ -96,13 +96,13 @@ class SegmentNet(nn.Module):
         self.layer11 = nn.Sequential(
                             nn.Conv2d(1536, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(512, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(512, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer12 = nn.Sequential(
@@ -112,13 +112,13 @@ class SegmentNet(nn.Module):
         self.layer13 = nn.Sequential(
                             nn.Conv2d(768, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(256, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(256, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer14 = nn.Sequential(
@@ -128,13 +128,13 @@ class SegmentNet(nn.Module):
         self.layer15 = nn.Sequential(
                             nn.Conv2d(384, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(128, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(128, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         self.layer16 = nn.Sequential(
@@ -144,17 +144,40 @@ class SegmentNet(nn.Module):
         self.layer17 = nn.Sequential(
                             nn.Conv2d(192, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(64, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True),
+                            nn.ReLU(inplace=True),
                             nn.Conv2d(64, 1, 3, stride=1, padding=1),
                             nn.BatchNorm2d(1),
-                            nn.LeakyReLU(negative_slope=0.01, inplace=True)
+                            nn.ReLU(inplace=True)
                         )
 
         if init_weights == True:
             pass
+
+
+    def forward(self, x):
+        x1 = self.layer1(x)
+        x2 = self.layer2(x1)
+        x3 = self.layer3(x2)
+        x4 = self.layer4(x3)
+        x5 = self.layer5(x4)
+        x6 = self.layer6(x5)
+        x7 = self.layer7(x6)
+        x8 = self.layer8(x7)
+        x9 = self.layer9(x8)
+
+        x10 = self.layer10(x9)
+        x11 = self.layer11(torch.cat((x7, x10), 1))
+        x12 = self.layer12(x11)
+        x13 = self.layer13(torch.cat((x5, x12), 1))
+        x14 = self.layer14(x13)
+        x15 = self.layer15(torch.cat((x3, x14), 1))
+        x16 = self.layer16(x15)
+        x17 = self.layer17(torch.cat((x1, x16), 1))
+
+        return {"seg": x17}
 
 
     def forward(self, x):
