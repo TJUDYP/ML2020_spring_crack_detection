@@ -149,9 +149,12 @@ class SegmentNet(nn.Module):
                             nn.BatchNorm2d(64),
                             nn.ReLU(inplace=True),
                             nn.Conv2d(64, 1, 3, stride=1, padding=1),
-                            nn.BatchNorm2d(1),
-                            nn.ReLU(inplace=True)
+                            nn.BatchNorm2d(1)
                         )
+
+        self.layer18 = nn.Sequential(
+        					nn.Sigmoid()
+        				)
 
         if init_weights == True:
             pass
@@ -177,7 +180,9 @@ class SegmentNet(nn.Module):
         x16 = self.layer16(x15)
         x17 = self.layer17(torch.cat((x1, x16), 1))
 
-        return {"seg": x17}
+        x18 = self.layer18(x17)
+
+        return {"seg": x18}
 
 if  __name__=='__main__':
     

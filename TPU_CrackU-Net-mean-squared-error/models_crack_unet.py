@@ -179,6 +179,30 @@ class SegmentNet(nn.Module):
 
         return {"seg": x17}
 
+
+    def forward(self, x):
+        x1 = self.layer1(x)
+        x2 = self.layer2(x1)
+        x3 = self.layer3(x2)
+        x4 = self.layer4(x3)
+        x5 = self.layer5(x4)
+        x6 = self.layer6(x5)
+        x7 = self.layer7(x6)
+        x8 = self.layer8(x7)
+        x9 = self.layer9(x8)
+
+        x10 = self.layer10(x9)
+        x11 = self.layer11(torch.cat((x7, x10), 1))
+        x12 = self.layer12(x11)
+        x13 = self.layer13(torch.cat((x5, x12), 1))
+        x14 = self.layer14(x13)
+        x15 = self.layer15(torch.cat((x3, x14), 1))
+        x16 = self.layer16(x15)
+        x17 = self.layer17(torch.cat((x1, x16), 1))
+
+        return {"seg": x17}
+
+
 if  __name__=='__main__':
     
     snet = SegmentNet()
