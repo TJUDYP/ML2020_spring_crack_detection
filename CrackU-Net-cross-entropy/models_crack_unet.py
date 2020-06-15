@@ -90,11 +90,11 @@ class SegmentNet(nn.Module):
                         )
 
         self.layer10 = nn.Sequential(
-                            nn.ConvTranspose2d(1024, 1024, 2, stride=2, padding=0)
+                            nn.ConvTranspose2d(1024, 512, 2, stride=2, padding=0)
                         )
 
         self.layer11 = nn.Sequential(
-                            nn.Conv2d(1536, 512, 3, stride=1, padding=1),
+                            nn.Conv2d(1024, 512, 3, stride=1, padding=1),
                             nn.BatchNorm2d(512),
                             nn.ReLU(inplace=True),
                             nn.Conv2d(512, 512, 3, stride=1, padding=1),
@@ -106,11 +106,11 @@ class SegmentNet(nn.Module):
                         )
 
         self.layer12 = nn.Sequential(
-                            nn.ConvTranspose2d(512, 512, 2, stride=2, padding=0)
+                            nn.ConvTranspose2d(512, 256, 2, stride=2, padding=0)
                         )
 
         self.layer13 = nn.Sequential(
-                            nn.Conv2d(768, 256, 3, stride=1, padding=1),
+                            nn.Conv2d(512, 256, 3, stride=1, padding=1),
                             nn.BatchNorm2d(256),
                             nn.ReLU(inplace=True),
                             nn.Conv2d(256, 256, 3, stride=1, padding=1),
@@ -122,11 +122,11 @@ class SegmentNet(nn.Module):
                         )
 
         self.layer14 = nn.Sequential(
-                            nn.ConvTranspose2d(256, 256, 2, stride=2, padding=0)
+                            nn.ConvTranspose2d(256, 128, 2, stride=2, padding=0)
                         )
 
         self.layer15 = nn.Sequential(
-                            nn.Conv2d(384, 128, 3, stride=1, padding=1),
+                            nn.Conv2d(256, 128, 3, stride=1, padding=1),
                             nn.BatchNorm2d(128),
                             nn.ReLU(inplace=True),
                             nn.Conv2d(128, 128, 3, stride=1, padding=1),
@@ -138,17 +138,17 @@ class SegmentNet(nn.Module):
                         )
 
         self.layer16 = nn.Sequential(
-                            nn.ConvTranspose2d(128, 128, 2, stride=2, padding=0)
+                            nn.ConvTranspose2d(128, 64, 2, stride=2, padding=0)
                         )
 
         self.layer17 = nn.Sequential(
-                            nn.Conv2d(192, 64, 3, stride=1, padding=1),
+                            nn.Conv2d(128, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
                             nn.ReLU(inplace=True),
                             nn.Conv2d(64, 64, 3, stride=1, padding=1),
                             nn.BatchNorm2d(64),
                             nn.ReLU(inplace=True),
-                            nn.Conv2d(64, 1, 3, stride=1, padding=1),
+                            nn.Conv2d(64, 1, 1, stride=1, padding=0),
                             nn.BatchNorm2d(1)
                         )
 
